@@ -1,0 +1,28 @@
+node_modules
+.env
+dist
+build
+.DS_Store
+*.log
+*.backup.db
+__pycache__/
+backend/data/raw/
+backend/data/quality/
+backend/data/discovery/
+backend/private-data/
+backend/data/releases/
+
+# Large local source snapshots and generated databases must never enter the
+# public source repository. They are reproducible through the documented data
+# pipeline and are served only through the private API.
+assets/
+backend/*.db
+backend/*.sqlite
+backend/prisma/*.db
+backend/prisma/*.sqlite
+backend/prisma/*.backup.db
+
+# Local agent/editor metadata
+backend/.agents/
+backend/.claude/
+backend/.windsurf/

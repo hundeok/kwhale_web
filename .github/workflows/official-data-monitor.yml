@@ -1,0 +1,44 @@
+name: Official property disclosure monitor
+
+on:
+  workflow_dispatch:
+    inputs:
+      year:
+        description: Disclosure year
+        required: true
+  schedule:
+    - cron: "17 1 1 * *"
+
+jobs:
+  discover-and-ingest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Discover PETI disclosures
+        shell: bash
+        run: |
+          YEAR="${{ inputs.year }}"
+          if [ -z "$YEAR" ]; then YEAR="$(date +%Y)"; fi
+          python3 backend/scripts/peti_discover.py --year "$YEAR"
+      - name: Download and hash direct official documents
+        if: ${{ hashFiles('backend/config/disclosures.json') != '' }}
+        env:
+          KWH_MANIFEST_PATH: backend/config/disclosures.json
+        run: bash backend/scripts/run_annual_pipeline.sh "${{ inputs.year || '' }}"
+      - name: Upload immutable source archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-disclosures-${{ inputs.year || 'scheduled' }}
+          path: |
+            backend/data/discovery/
+            backend/data/raw/
+            backend/data/quality/latest.json
+          retention-days: 90

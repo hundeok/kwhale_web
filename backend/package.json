@@ -1,0 +1,42 @@
+{
+  "name": "kwhale_web_gpt_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "prisma:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "data:ingest": "python3 scripts/official_ingest.py",
+    "data:discover-peti": "python3 scripts/peti_discover.py",
+    "data:discover-peti-legacy": "python3 scripts/peti_legacy_discover.py",
+    "data:discover-gwanbo": "python3 scripts/gwanbo_discover.py",
+    "data:download-gwanbo": "python3 scripts/gwanbo_download.py",
+    "data:source-coverage": "python3 scripts/source_coverage_report.py",
+    "data:annual": "bash scripts/run_annual_pipeline.sh",
+    "data:quality": "node scripts/quality_report.js",
+    "data:recalculate": "node scripts/recalculate_totals.js",
+    "data:normalize": "node scripts/backfill_normalization.js",
+    "data:import-yearly": "node scripts/import_yearly_export.js",
+    "data:parser-quality": "node scripts/parser_quality_report.js",
+    "data:semantic-quality": "node scripts/semantic_quality_audit.js",
+    "data:compare-realsignal-recent": "node scripts/compare_realsignal_recent.js",
+    "data:acquire-realsignal": "python3 scripts/realsignal_acquire.py",
+    "data:build-dataset": "python3 scripts/build_dataset.py",
+    "data:audit-dataset": "python3 scripts/dataset_audit.py",
+    "data:refresh": "bash scripts/run_dataset_pipeline.sh",
+    "data:test-pipeline": "python3 -m unittest discover -s test -p 'test_*.py'",
+    "api:private": "node server_private.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "compression": "^1.8.1",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "prisma": "^6.19.3"
+  }
+}

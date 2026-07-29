@@ -1,0 +1,12 @@
+node_modules
+# Keep environment variables out of version control
+.env
+
+/generated/prisma
+*.log
+*.backup.db
+__pycache__/
+data/raw/
+data/quality/
+private-data/
+data/releases/

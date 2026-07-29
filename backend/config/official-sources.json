@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "gwanbo",
+      "name": "대한민국 전자관보",
+      "baseUrl": "https://www.gwanbo.go.kr",
+      "role": "PRIMARY",
+      "coverage": "2001-present",
+      "discovery": "MANIFEST_OR_CONFIGURED_API",
+      "officialSearchUrl": "https://www.gwanbo.go.kr/user/search/searchDetail.do"
+    },
+    {
+      "id": "peti",
+      "name": "공직윤리시스템 재산등록사항 공개목록",
+      "baseUrl": "https://www.peti.go.kr",
+      "role": "SUPPLEMENTAL",
+      "coverage": "2022-08 through 2023-12",
+      "discovery": "MANIFEST",
+      "officialSearchUrl": "https://www.peti.go.kr/peOptpListOptp.do"
+    }
+  ]
+}

@@ -1,0 +1,217 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 공직자 마스터 테이블
+model Official {
+  id             String   @id @default(uuid())
+  name           String
+  agency         String   // 소속기관 (예: 국회, 대통령비서실)
+  title          String   // 직위 (예: 국회의원, 비서관)
+  totalAssets    BigInt   // 총 자산액
+  netWorth       BigInt   // 순자산액
+  lastUpdated    DateTime @default(now())
+
+  assets         Asset[]
+  history        AssetHistory[]
+  disclosures    DisclosureOfficial[]
+}
+
+// 개별 자산 상세 (부동산, 주식, 코인)
+model Asset {
+  id         String   @id @default(uuid())
+  officialId String
+  official   Official @relation(fields: [officialId], references: [id], onDelete: Cascade)
+  
+  category   String
+  detailType String
+  address    String?
+  owner      String?  // [추가] 소유자 (본인, 배우자, 장남 등)
+  latitude   Float?   // [추가] 지도 정밀 위도
+  longitude  Float?   // [추가] 지도 정밀 경도
+  valuation  BigInt
+
+  disclosureId String?
+  disclosure   Disclosure? @relation(fields: [disclosureId], references: [id], onDelete: SetNull)
+  rawAssetId   String?
+  rawAsset     RawAsset? @relation(fields: [rawAssetId], references: [id], onDelete: SetNull)
+  normalizedCategory String?
+  normalizedSubcategory String?
+  confidence Float?
+  reviewStatus String @default("UNREVIEWED")
+  sourceLocator String?
+  assetKey String?
+  securityHoldings SecurityHolding[]
+  cryptoHoldings CryptoHolding[]
+
+  @@index([officialId, category])
+  @@index([disclosureId])
+  @@index([assetKey])
+}
+
+model SecurityInstrument {
+  id            String @id @default(uuid())
+  canonicalName String
+  ticker        String?
+  market        String?
+  country       String?
+  aliasesJson   String?
+  holdings      SecurityHolding[]
+
+  @@unique([canonicalName, ticker, market])
+  @@index([ticker])
+}
+
+model SecurityHolding {
+  id            String @id @default(uuid())
+  assetId       String
+  asset         Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  instrumentId  String
+  instrument    SecurityInstrument @relation(fields: [instrumentId], references: [id], onDelete: Restrict)
+  quantity      Float?
+  declaredValuation BigInt?
+  allocationMethod String?
+  confidence    Float
+  sourceText    String
+
+  @@unique([assetId, instrumentId, sourceText])
+  @@index([instrumentId])
+}
+
+model CryptoInstrument {
+  id            String @id @default(uuid())
+  canonicalName String
+  ticker        String?
+  aliasesJson   String?
+  holdings      CryptoHolding[]
+
+  @@unique([canonicalName, ticker])
+  @@index([ticker])
+}
+
+model CryptoHolding {
+  id            String @id @default(uuid())
+  assetId       String
+  asset         Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  instrumentId  String
+  instrument    CryptoInstrument @relation(fields: [instrumentId], references: [id], onDelete: Restrict)
+  quantity      Float?
+  declaredValuation BigInt?
+  allocationMethod String?
+  confidence    Float
+  sourceText    String
+
+  @@unique([assetId, instrumentId, sourceText])
+  @@index([instrumentId])
+}
+
+// 자산 증감 히스토리 (타임라인용)
+model AssetHistory {
+  id             String   @id @default(uuid())
+  officialId     String
+  year           Int      // 공시 연도
+  action         String   // 신규취득, 매도, 가액변동 등
+  description    String   // 예: "서초구 아파트 매도 차익"
+  amountChange   BigInt   // 증감액 (+/-)
+  
+  official       Official @relation(fields: [officialId], references: [id])
+  fromDisclosureId String?
+  toDisclosureId String?
+  previousAmount BigInt?
+  currentAmount BigInt?
+  confidence Float?
+  matchMethod String?
+  sourceAssetKey String?
+
+  @@index([officialId, year])
+}
+
+// 공식 공시 단위. 연도와 원문 출처를 모든 계산의 기준으로 삼는다.
+model Disclosure {
+  id            String   @id @default(uuid())
+  year          Int
+  publishedAt   DateTime
+  disclosureType String
+  committee     String?
+  title         String
+  sourceUrl     String
+  sourceSite    String
+  documentHash  String?
+  parserVersion String?
+  ingestionStatus String @default("DISCOVERED")
+  ingestedAt    DateTime?
+  createdAt     DateTime @default(now())
+
+  documents     SourceDocument[]
+  officials     DisclosureOfficial[]
+  assets        Asset[]
+  rawAssets     RawAsset[]
+
+  @@unique([sourceUrl])
+  @@index([year, publishedAt])
+}
+
+// 다운로드한 원문 파일과 재현 가능한 해시.
+model SourceDocument {
+  id            String   @id @default(uuid())
+  disclosureId  String
+  disclosure    Disclosure @relation(fields: [disclosureId], references: [id], onDelete: Cascade)
+  fileName      String
+  mimeType      String?
+  localPath     String
+  sha256        String
+  byteSize      BigInt
+  downloadedAt  DateTime @default(now())
+  extractionStatus String @default("PENDING")
+  extractedTextPath String?
+
+  @@unique([sha256])
+  @@index([disclosureId])
+}
+
+// 공시 당시의 소속/직위 및 공시 합계. Official의 현재 마스터와 분리한다.
+model DisclosureOfficial {
+  id            String   @id @default(uuid())
+  disclosureId  String
+  disclosure    Disclosure @relation(fields: [disclosureId], references: [id], onDelete: Cascade)
+  officialId    String
+  official      Official @relation(fields: [officialId], references: [id], onDelete: Cascade)
+  nameAtDisclosure String
+  agencyAtDisclosure String
+  titleAtDisclosure String
+  grossAssets   BigInt
+  liabilities   BigInt
+  netWorth      BigInt
+  identityConfidence Float?
+
+  @@unique([disclosureId, officialId])
+  @@index([officialId, disclosureId])
+}
+
+// 파싱 전 원문 보존. 정규화 실패 시에도 원문을 잃지 않는다.
+model RawAsset {
+  id            String   @id @default(uuid())
+  disclosureId  String
+  disclosure    Disclosure @relation(fields: [disclosureId], references: [id], onDelete: Cascade)
+  officialName  String
+  agency        String?
+  title         String?
+  ownerRaw      String?
+  categoryRaw   String
+  detailRaw     String
+  amountRaw     String?
+  amountValue   BigInt?
+  sourceLocator String?
+  rowHash       String
+  parsedAt      DateTime @default(now())
+  parserVersion String
+  assets        Asset[]
+
+  @@unique([disclosureId, rowHash])
+  @@index([disclosureId, officialName])
+}

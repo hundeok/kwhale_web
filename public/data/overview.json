@@ -1,0 +1,165 @@
+{
+  "metadata": {
+    "exportDate": "2025-10-28T10:34:19.812Z",
+    "totalPersons": 6995,
+    "dataVersion": "1.0"
+  },
+  "overview": {
+    "totalPersons": 6995,
+    "netValuation": 12105469457000,
+    "totalAssetsValuation": 15288159938000,
+    "debtValuation": 3182690481000
+  },
+  "averages": {
+    "averageTotalValuation": 1730588914.5103645,
+    "averageGrossValuation": 2185583979.6997857,
+    "averageDebtValuation": 454995065.189421,
+    "averageSecuritiesValuation": 193872221.87276626,
+    "averageDigitalAssetsValuation": 6346906.075768406,
+    "averageRealEstateValuation": 1338394438.7419586,
+    "averageMovableAssetsValuation": 30766424.01715511,
+    "averageOtherAssetsValuation": 616203988.9921372
+  },
+  "assetComposition": [
+    {
+      "type": "건물",
+      "totalValuation": 7670289364000,
+      "count": 24404,
+      "percentage": 50.17143590272662
+    },
+    {
+      "type": "토지",
+      "totalValuation": 1691779735000,
+      "count": 29310,
+      "percentage": 11.065947385825941
+    },
+    {
+      "type": "증권",
+      "totalValuation": 1356136192000,
+      "count": 11729,
+      "percentage": 8.870499769100466
+    },
+    {
+      "type": "채권",
+      "totalValuation": 400253378000,
+      "count": 1857,
+      "percentage": 2.6180611638234943
+    },
+    {
+      "type": "가상자산",
+      "totalValuation": 44396608000,
+      "count": 2296,
+      "percentage": 0.2903986364614653
+    },
+    {
+      "type": "예금",
+      "totalValuation": 3786861651000,
+      "count": 25730,
+      "percentage": 24.769898184983262
+    },
+    {
+      "type": "동산",
+      "totalValuation": 215211136000,
+      "count": 16500,
+      "percentage": 1.4076980936409145
+    },
+    {
+      "type": "회원권",
+      "totalValuation": 35500113000,
+      "count": 708,
+      "percentage": 0.23220657779594195
+    },
+    {
+      "type": "현금",
+      "totalValuation": 17793669000,
+      "count": 485,
+      "percentage": 0.11638855867652423
+    },
+    {
+      "type": "합명·합자·유한회사 출자지분",
+      "totalValuation": 28374710000,
+      "count": 345,
+      "percentage": 0.18559924879823037
+    },
+    {
+      "type": "정치자금법에 따른 정치자금의 수입 및 지출을 위한 예금계좌의 예금",
+      "totalValuation": 24317309000,
+      "count": 588,
+      "percentage": 0.1590597501505547
+    },
+    {
+      "type": "골동품 및 예술품",
+      "totalValuation": 7613388000,
+      "count": 289,
+      "percentage": 0.04979924353797665
+    },
+    {
+      "type": "금 및 백금",
+      "totalValuation": 6717964000,
+      "count": 255,
+      "percentage": 0.04394226661183691
+    },
+    {
+      "type": "보석류",
+      "totalValuation": 2914721000,
+      "count": 267,
+      "percentage": 0.01906521786677033
+    },
+    {
+      "type": "고지거부",
+      "totalValuation": 0,
+      "count": 5787,
+      "percentage": 0
+    },
+    {
+      "type": "지식재산권",
+      "totalValuation": 0,
+      "count": 104,
+      "percentage": 0
+    },
+    {
+      "type": "비영리법인에 출연한 재산",
+      "totalValuation": 0,
+      "count": 59,
+      "percentage": 0
+    }
+  ],
+  "highestHolders": {
+    "netWorth": {
+      "name": "안철수",
+      "org": "국회",
+      "title": "국회의원",
+      "amount": 136789820000
+    },
+    "securities": {
+      "name": "안철수",
+      "org": "국회",
+      "title": "국회의원",
+      "amount": 129604770000
+    },
+    "digitalAssets": {
+      "name": "조만형",
+      "org": "전라남도 자치경찰위원회",
+      "title": "(전)위원장",
+      "amount": 2802511000
+    },
+    "realEstate": {
+      "name": "이형근",
+      "org": "법원행정처",
+      "title": "기획조정실장",
+      "amount": 50818474000
+    },
+    "movableAssets": {
+      "name": "백인숙",
+      "org": "전라남도 여수시의회",
+      "title": "의원",
+      "amount": 2203672000
+    },
+    "otherAssets": {
+      "name": "변필건",
+      "org": "법무부",
+      "title": "기획조정실장",
+      "amount": 34593910000
+    }
+  }
+}

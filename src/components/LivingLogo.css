@@ -1,0 +1,97 @@
+.living-logo-container {
+  display: flex;
+  font-weight: 900;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  letter-spacing: -1px;
+}
+
+/* 베이스: 오직 골드, 옐로우, 화이트 톤만 사용 */
+.living-char {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffffff 10%, #FDE68A 50%, #F59E0B 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Theme 1: Pulse (박동) */
+.theme-gold-pulse .living-char { animation: pulseG 2s infinite alternate; }
+/* Theme 2: Wave (파도) */
+.theme-gold-wave .living-char { animation: waveG 2s infinite ease-in-out; }
+/* Theme 3: Elastic (탄성) */
+.theme-gold-elastic .living-char { animation: elasticG 2.5s infinite; }
+/* Theme 4: Glitch (글리치) */
+.theme-gold-glitch .living-char { animation: glitchG 3s infinite steps(2); }
+/* Theme 5: Breathe (호흡-자간 팽창) */
+.theme-gold-breathe .living-char { animation: breatheG 3s infinite alternate; }
+/* Theme 6: Flip (3D 회전) */
+.theme-gold-flip .living-char { animation: flipG 4s infinite ease-in-out; }
+/* Theme 7: Blur (블러) */
+.theme-gold-blur .living-char { animation: blurG 3s infinite alternate; }
+/* Theme 8: Swing (진자 운동) */
+.theme-gold-swing .living-char { animation: swingG 2s infinite ease-in-out; transform-origin: top center; }
+/* Theme 9: Bounce (바운스) */
+.theme-gold-bounce .living-char { animation: bounceG 2s infinite cubic-bezier(0.28, 0.84, 0.42, 1); }
+/* Theme 10: Shatter (스큐) */
+.theme-gold-shatter .living-char { animation: shatterG 3s infinite; }
+
+/* ---------------- 극강의 다이나믹 키프레임 ---------------- */
+@keyframes pulseG {
+  0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.4)); }
+  100% { transform: scale(1.15); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
+}
+
+@keyframes waveG {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px) scale(1.1); }
+}
+
+@keyframes elasticG {
+  0%, 100% { transform: scale3d(1, 1, 1); }
+  30% { transform: scale3d(1.25, 0.75, 1); }
+  40% { transform: scale3d(0.75, 1.25, 1); }
+  50% { transform: scale3d(1.15, 0.85, 1); }
+  65% { transform: scale3d(0.95, 1.05, 1); }
+  75% { transform: scale3d(1.05, 0.95, 1); }
+}
+
+@keyframes glitchG {
+  0%, 100% { transform: translate(0); filter: drop-shadow(0 0 0 transparent); }
+  20% { transform: translate(-3px, 2px) skewX(20deg); filter: drop-shadow(3px 0 0 #FDE68A); }
+  40% { transform: translate(3px, -2px) skewX(-20deg); filter: drop-shadow(-3px 0 0 #F59E0B); }
+  60% { transform: translate(-2px, -2px); filter: drop-shadow(0 0 5px #ffffff); }
+  80% { transform: translate(2px, 2px); }
+}
+
+@keyframes breatheG {
+  0% { transform: scaleX(1); margin-right: 1px; }
+  100% { transform: scaleX(1.1); margin-right: 8px; filter: brightness(1.5); }
+}
+
+@keyframes flipG {
+  0%, 100% { transform: rotateY(0deg); }
+  50% { transform: rotateY(180deg) scale(1.2); filter: brightness(1.2); }
+}
+
+@keyframes blurG {
+  0% { filter: blur(0px) brightness(1); transform: scale(1); }
+  100% { filter: blur(4px) brightness(1.8); transform: scale(1.1); }
+}
+
+@keyframes swingG {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  75% { transform: rotate(-15deg); }
+}
+
+@keyframes bounceG {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes shatterG {
+  0%, 100% { transform: skew(0deg, 0deg); }
+  25% { transform: skew(10deg, 10deg) scale(1.1); filter: brightness(1.3); }
+  75% { transform: skew(-10deg, -10deg) scaleY(1.2); filter: brightness(1.3); }
+}

@@ -1,0 +1,23 @@
+{
+  "version": "2026-07-27",
+  "rules": [
+    { "match": ["토지"], "group": "부동산", "category": "토지" },
+    { "match": ["건물"], "group": "부동산", "category": "건물" },
+    { "match": ["자동차", "선박", "건설기계", "동산"], "group": "동산", "category": "자동차·선박·기타동산" },
+    { "match": ["정치자금법", "예금", "보험"], "group": "금융자산", "category": "예금·보험" },
+    { "match": ["현금"], "group": "금융자산", "category": "현금" },
+    { "match": ["채권"], "group": "금융자산", "category": "채권" },
+    { "match": ["증권", "주식"], "group": "투자자산", "category": "증권" },
+    { "match": ["가상자산", "암호화폐", "코인"], "group": "디지털자산", "category": "가상자산" },
+    { "match": ["채무", "대출"], "group": "부채", "category": "채무" },
+    { "match": ["회원권"], "group": "기타자산", "category": "회원권" },
+    { "match": ["금 및 백금", "금·백금"], "group": "기타자산", "category": "금·백금" },
+    { "match": ["보석"], "group": "기타자산", "category": "보석류" },
+    { "match": ["골동품", "예술품"], "group": "기타자산", "category": "골동품·예술품" },
+    { "match": ["지식재산권"], "group": "기타자산", "category": "지식재산권" },
+    { "match": ["출자지분"], "group": "투자자산", "category": "비상장 출자지분" },
+    { "match": ["비영리법인"], "group": "기타자산", "category": "비영리법인 출연재산" },
+    { "match": ["고지거부"], "group": "비재산항목", "category": "고지거부" }
+  ],
+  "fallback": { "group": "미분류", "category": "기타" }
+}

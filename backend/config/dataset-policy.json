@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "datasetId": "kwhale-public-official-assets",
+  "minimumYear": 2022,
+  "sources": {
+    "realsignal": {
+      "role": "bootstrap-and-comparison",
+      "manifestUrl": "https://cdn.real-signal.org/api/v1/manifest.json",
+      "legacyYearUrlTemplate": "https://cdn.real-signal.org/{year}",
+      "redistribution": "derived-output-only"
+    },
+    "peti": {
+      "role": "official-verification",
+      "baseUrl": "https://www.peti.go.kr"
+    },
+    "gwanbo": {
+      "role": "official-primary-document",
+      "baseUrl": "https://www.gwanbo.go.kr"
+    }
+  },
+  "storage": {
+    "rawVisibility": "private",
+    "rawRetention": "indefinite",
+    "immutableSnapshots": true,
+    "contentAddressedObjects": true,
+    "publishRawSourceObjects": false
+  },
+  "identity": {
+    "personMatchFields": ["name", "organization", "title"],
+    "disclosureMatchFields": ["registeredDate", "disclosureDate"],
+    "assetMatchFields": ["owner", "type", "subType", "detail", "valuation"]
+  },
+  "publishing": {
+    "allowed": ["aggregates", "search-indexes", "api-projections"],
+    "forbidden": ["raw-source-objects", "private-manifests", "download-headers"]
+  }
+}
