@@ -13,6 +13,26 @@
 - 기본 테마: 다크
 - 기본 연도 정책: `recent`
 
+## GitHub·Vercel
+
+- GitHub: `https://github.com/hundeok/kwhale_web`
+- 브랜치: `main`
+- Vercel 프로젝트: `hundeoks-projects/kwhale_web_gpt`
+- 프런트 프로덕션: `https://kwhalewebgpt.vercel.app`
+- GitHub `main`과 Vercel 프로젝트 연결 완료
+
+현재 Vercel은 프런트엔드 전용 배포다. private SQLite 릴리스는 의도적으로
+업로드하지 않았으므로 프로덕션 `/api`는 아직 연결되지 않았다. 데이터 메뉴가
+완전히 동작하기 전까지 이 주소를 제품 출시 완료 상태로 간주하지 않는다.
+
+다음 배포 단계는 다음 중 하나를 선택해야 한다.
+
+1. 읽기 전용 projection DB를 외부 데이터 서비스로 이전
+2. private API를 별도 장기 실행 서버에 배포하고 Vercel `/api`를 프록시
+
+336MB private SQLite를 Vercel 정적 파일이나 공개 GitHub 저장소에 직접 넣지
+않는다.
+
 ## 현재 데이터 기준
 
 지도 API의 최근 통합 기준 화면에서 확인된 값:
@@ -94,4 +114,3 @@ MapLibre marker element
 4. 이 문서
 5. `docs/quality-runbook.md`
 6. 프런트·API 실행 후 빌드와 지도 기준 화면 확인
-
