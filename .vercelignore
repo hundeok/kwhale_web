@@ -1,0 +1,13 @@
+# Frontend-only deployment. The private API and reproducible data pipeline are
+# deployed separately and must never be uploaded as static/serverless assets.
+backend/
+assets/
+node_modules/
+dist/
+.git/
+.github/
+.vercel/
+*.db
+*.sqlite
+*.backup.db
+.env
