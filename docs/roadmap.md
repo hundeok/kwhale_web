@@ -43,8 +43,10 @@
 
 ## P1. 운영·배포
 
-- 환경변수와 비밀정보 점검
-- 공개 API projection 최소화
+- [완료] 환경변수와 비밀정보 분리
+- [완료] 공개 API projection 및 Turso 배포
+- [완료] Git push 기반 Vercel 자동 배포
+- [완료] 도쿄 동지역 배치·CDN 캐시·배포 후 예열
 - 에러 로깅과 성능 관측
 - 접근성·키보드 탐색
 - SEO·공유 카드
@@ -75,4 +77,3 @@
 5. `npm run build`
 6. 깨끗한 지도 URL에서 기준 상태 확인
 7. 한 기능씩 구현하고 `docs/decision-log.md` 갱신
-

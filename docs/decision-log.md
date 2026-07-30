@@ -72,3 +72,30 @@
   제공
 - 선행 조건: 안정 ID, 별칭 사전, 관계 신뢰도, 역추적 가능한 lineage
 
+## D-010. 공개 DB와 원본 DB 분리
+
+- 상태: 확정
+- 원본: 로컬 private SQLite와 immutable source/lineage
+- 공개: 비공개 payload를 제거하고 회계 합계를 대조한 Turso projection
+- 결과: GitHub·Vercel 정적 파일에는 DB를 넣지 않고 Vercel API만 Turso에 접근
+- 승격: 릴리스 ID별 새 Turso DB를 만든 뒤 원격 검증을 통과한 경우에만 Vercel
+  환경변수를 전환
+- 롤백: 직전 Turso DB를 즉시 삭제하지 않고 복구 대상으로 보존
+
+## D-011. 코드 배포와 데이터 배포 분리
+
+- 상태: 확정
+- 코드: GitHub `main` push → Vercel 자동 배포
+- 데이터: `npm run release:data` → projection 생성·검증 → Turso → Vercel
+- 이유: 코드 변경마다 약 200MB DB를 재업로드하면 느리고 실패 면적이 커짐
+- 배포 검증: API health의 커밋 SHA와 GitHub SHA가 일치한 뒤 핵심 메뉴를 예열
+
+## D-012. Vercel과 Turso 도쿄 동지역 배치
+
+- 상태: 확정
+- 계기: Vercel `iad1`과 Turso 도쿄 사이 왕복으로 대시보드 2초대, 알파 엔진
+  7초대 지연
+- 결과: Vercel Function을 `hnd1`로 이동하고 공개 GET API에 5분 CDN 캐시 적용
+- 실측: 한국 엣지 캐시 적중 기준 주요 JSON API 약 0.03~0.07초
+- 주의: 새 배포 또는 지역별 첫 요청은 원격 SQL 계산으로 더 느릴 수 있으며
+  자동 예열은 이를 완화하지만 모든 CDN PoP의 첫 요청을 완전히 없애지는 못함
