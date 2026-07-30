@@ -145,6 +145,20 @@ node --check api/index.js
 npm run build
 ```
 
+### 운영 승격 자동화
+
+일반 코드 변경은 GitHub `main` 푸시만으로 Vercel이 자동 배포한다. 데이터
+릴리스는 대용량 DB를 매 커밋마다 다시 올리지 않고 다음 명령으로 별도 승격한다.
+
+```bash
+npm run release:data
+```
+
+이 명령은 깨끗하며 `origin/main`과 일치하는 커밋에서만 동작한다. 공개 projection
+재생성 → 로컬 정합성 검사 → 릴리스 ID 기반 Turso DB 생성 → 원격 행 수 및
+비공개 필드 검사 → Vercel 환경변수 교체 → 프로덕션 배포를 순서대로 수행한다.
+기존 Turso DB는 즉시 삭제하지 않아 롤백 대상으로 보존한다.
+
 ## 8. 장애 대응
 
 ### `undefined.toLocaleString`

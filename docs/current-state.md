@@ -17,8 +17,8 @@
 
 - GitHub: `https://github.com/hundeok/kwhale_web`
 - 브랜치: `main`
-- Vercel 프로젝트: `hundeoks-projects/kwhale_web_gpt`
-- 프런트 프로덕션: `https://kwhalewebgpt.vercel.app`
+- Vercel 프로젝트: `hundeoks-projects/kwhale_web`
+- 프런트 프로덕션: `https://kwhaleweb.vercel.app`
 - GitHub `main`과 Vercel 프로젝트 연결 완료
 - Turso DB: `kwhale-public`, 도쿄 `aws-ap-northeast-1`
 - 프로덕션 `/api`: Vercel Function → Turso 읽기 전용 공개 projection
@@ -35,6 +35,8 @@ projection은 `npm run data:build-public`으로 만들며, 원본의 회계 합�
 - 기간: 2022~2026
 - `asset.raw_json` 잔존: 0
 - 대시보드·공직자·순위·지도·증권·크립토·부동산·알파 API 연결 완료
+- 코드 배포: GitHub `main` push → Vercel 자동 배포
+- 데이터 배포: `npm run release:data` → projection/Turso 검증 → Vercel 승격
 
 ## 현재 데이터 기준
 

@@ -28,3 +28,4 @@ backend/.agents/
 backend/.claude/
 backend/.windsurf/
 .vercel
+.env*

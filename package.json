@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:api": "node scripts/build_turso_api.mjs",
+    "release:data": "bash scripts/release_public_data.sh",
     "lint": "eslint .",
     "preview": "vite preview"
   },
