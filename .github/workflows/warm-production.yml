@@ -1,0 +1,21 @@
+name: Warm production data views
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  warm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Wait for matching Vercel deployment and warm public views
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+        run: bash scripts/warm_production.sh

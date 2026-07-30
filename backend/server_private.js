@@ -585,6 +585,7 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     database: path.basename(databasePath),
     release,
+    deploymentCommit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) || 'local',
     rawDatabaseExposed: false,
   });
 });

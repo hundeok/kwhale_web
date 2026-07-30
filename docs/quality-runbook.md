@@ -167,6 +167,8 @@ npm run release:data
   있다.
 - `/api/dashboard`, `/api/officials`, `/api/alpha-engine`은 배포 후 각각 두 번
   호출해 첫 응답과 `x-vercel-cache: HIT` 응답을 모두 확인한다.
+- GitHub `main` 배포 후 `warm-production.yml`이 배포 커밋 SHA를 확인하고 핵심
+  데이터 화면을 자동 예열한다.
 
 ## 8. 장애 대응
 

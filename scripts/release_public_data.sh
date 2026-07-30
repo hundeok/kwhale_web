@@ -74,6 +74,7 @@ turso db tokens create "$database_name" |
     "$VERCEL_ENVIRONMENTS" --force --sensitive --yes
 
 npx vercel --prod --yes
+EXPECTED_COMMIT="$(git rev-parse HEAD)" bash scripts/warm_production.sh
 
 echo "Production data release completed."
 echo "database=$database_name"

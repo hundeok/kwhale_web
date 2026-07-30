@@ -564,6 +564,7 @@ app.get('/api/health', async (req, res) => {
         status: 'ok',
         database: 'turso:kwhale-public',
         release,
+        deploymentCommit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) || 'local',
         rawDatabaseExposed: false,
     });
 });
