@@ -10,6 +10,7 @@ backend/data/raw/
 backend/data/quality/
 backend/data/discovery/
 backend/private-data/
+backend/public-data/
 backend/data/releases/
 
 # Large local source snapshots and generated databases must never enter the

@@ -12,7 +12,8 @@ K-Whale은 외부 사이트의 현재 응답에 의존하지 않고, 모든 입�
 2. `backend/private-data/sources`: 응답 원본과 해제된 JSON의 콘텐츠 주소 저장
 3. `backend/private-data/lineage`: 수집 URL·헤더·시각·해시·검증 결과
 4. `backend/private-data/releases`: 정규화한 불변 SQLite 릴리스
-5. `backend/data/releases`: 공개용으로 명시적으로 생성한 최소 산출물
+5. `backend/public-data`: Turso 업로드 전용으로 생성한 로컬 공개 projection
+6. Turso `kwhale-public`: Vercel API만 접근하는 공개 서비스 데이터 계층
 
 `private-data`는 Git, Vite `public`, Express 정적 파일 경로에 포함하지 않는다.
 프런트엔드는 원본 파일이 아닌 백엔드의 제한된 API만 사용해야 한다.
@@ -64,6 +65,31 @@ CDN 매니페스트의 연도는 데이터 배포 기간이다. `registeredDate`
 - 별도 검토 없이 개인 단위 원문 전체 덤프
 
 공개 산출물은 집계, 검색 인덱스, 페이지 단위 API projection으로 한정한다.
+
+## 공개 projection과 Turso 배포
+
+```bash
+cd backend
+npm run data:build-public
+turso db create kwhale-public \
+  --from-file public-data/kwhale-public.sqlite \
+  --group default --wait
+```
+
+`data:build-public`은 다음을 자동 검증한다.
+
+- 원본과 공개 DB의 테이블별 행 수 일치
+- 신고 총자산·채무·순자산·자산행 합계 일치
+- 자산 평가액 회계 합계 일치
+- SQLite 무결성
+- `asset.raw_json` 전량 제거
+- 내부 `source_object_key` 전량 제거
+- Turso import용 WAL 모드
+- 공개 DB SHA-256 manifest 생성
+
+Turso 토큰은 저장소나 `.env`에 커밋하지 않고 Vercel의 Sensitive Environment
+Variable `TURSO_AUTH_TOKEN`으로만 관리한다. DB 주소는
+`TURSO_DATABASE_URL`에 둔다.
 
 ## 품질 게이트
 

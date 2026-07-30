@@ -1,6 +1,14 @@
-# Frontend-only deployment. The private API and reproducible data pipeline are
-# deployed separately and must never be uploaded as static/serverless assets.
-backend/
+# Deploy only the public serverless API adapter and its parser runtime.
+# Raw/private databases and the reproducible acquisition pipeline stay local.
+backend/private-data/
+backend/public-data/
+backend/data/*
+!backend/data/category-taxonomy.json
+backend/scripts/
+backend/test/
+backend/prisma/
+backend/*.db
+backend/*.sqlite
 assets/
 node_modules/
 dist/

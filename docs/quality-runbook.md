@@ -124,6 +124,27 @@ npm run data:refresh -- --year 2026
 연도 제한 릴리스를 전체 공개 릴리스로 자동 승격하지 않는다. 원본과 기존
 릴리스를 덮어쓰지 않는다.
 
+### 공개 DB 승격
+
+```bash
+cd backend
+npm run data:build-public
+sqlite3 public-data/kwhale-public.sqlite \
+  'PRAGMA integrity_check; SELECT COUNT(*) FROM asset WHERE raw_json <> "";'
+```
+
+결과는 각각 `ok`, `0`이어야 한다. 이후 Turso에 새 DB로 import하고 원격에서
+인물·신고·자산 행 수와 총자산·채무·순자산을 다시 대조한다. 검증 전 기존
+프로덕션 DB를 삭제하거나 교체하지 않는다.
+
+Vercel API 변환본은 다음으로 재생성한다.
+
+```bash
+npm run build:api
+node --check api/index.js
+npm run build
+```
+
 ## 8. 장애 대응
 
 ### `undefined.toLocaleString`
@@ -161,4 +182,3 @@ npm run data:refresh -- --year 2026
 - 어떤 테스트와 빌드가 통과했는지
 - 아직 원문 대조 중인 부분
 - 사용자가 확인할 로컬 URL
-

@@ -1,6 +1,6 @@
 # 현재 작업 상태
 
-마지막 갱신: 2026-07-29
+마지막 갱신: 2026-07-30
 
 이 문서는 영구 원칙이 아니라 현재 개발 지점을 빠르게 인수인계하기 위한
 스냅샷이다. 기능 변경 후 날짜와 내용을 갱신한다.
@@ -20,18 +20,21 @@
 - Vercel 프로젝트: `hundeoks-projects/kwhale_web_gpt`
 - 프런트 프로덕션: `https://kwhalewebgpt.vercel.app`
 - GitHub `main`과 Vercel 프로젝트 연결 완료
+- Turso DB: `kwhale-public`, 도쿄 `aws-ap-northeast-1`
+- 프로덕션 `/api`: Vercel Function → Turso 읽기 전용 공개 projection
 
-현재 Vercel은 프런트엔드 전용 배포다. private SQLite 릴리스는 의도적으로
-업로드하지 않았으므로 프로덕션 `/api`는 아직 연결되지 않았다. 데이터 메뉴가
-완전히 동작하기 전까지 이 주소를 제품 출시 완료 상태로 간주하지 않는다.
+private SQLite와 원문 payload는 Vercel·Turso·GitHub에 올리지 않는다. 배포 전용
+projection은 `npm run data:build-public`으로 만들며, 원본의 회계 합계와 행 수가
+일치하지 않거나 비공개 필드가 남으면 생성에 실패한다.
 
-다음 배포 단계는 다음 중 하나를 선택해야 한다.
+2026-07-30 프로덕션 확인:
 
-1. 읽기 전용 projection DB를 외부 데이터 서비스로 이전
-2. private API를 별도 장기 실행 서버에 배포하고 Vercel `/api`를 프록시
-
-336MB private SQLite를 Vercel 정적 파일이나 공개 GitHub 저장소에 직접 넣지
-않는다.
+- `person`: 9,856
+- `disclosure`: 19,199
+- `asset`: 362,682
+- 기간: 2022~2026
+- `asset.raw_json` 잔존: 0
+- 대시보드·공직자·순위·지도·증권·크립토·부동산·알파 API 연결 완료
 
 ## 현재 데이터 기준
 

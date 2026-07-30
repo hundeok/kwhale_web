@@ -23,6 +23,7 @@
     "data:compare-realsignal-recent": "node scripts/compare_realsignal_recent.js",
     "data:acquire-realsignal": "python3 scripts/realsignal_acquire.py",
     "data:build-dataset": "python3 scripts/build_dataset.py",
+    "data:build-public": "python3 scripts/build_public_projection.py --source private-data/releases/latest/kwhale.sqlite --output public-data/kwhale-public.sqlite",
     "data:audit-dataset": "python3 scripts/dataset_audit.py",
     "data:refresh": "bash scripts/run_dataset_pipeline.sh",
     "data:test-pipeline": "python3 -m unittest discover -s test -p 'test_*.py'",
