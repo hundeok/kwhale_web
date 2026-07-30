@@ -22,6 +22,8 @@
 - GitHub `main`과 Vercel 프로젝트 연결 완료
 - Turso DB: `kwhale-public`, 도쿄 `aws-ap-northeast-1`
 - 프로덕션 `/api`: Vercel Function → Turso 읽기 전용 공개 projection
+- API 실행 리전: Vercel `hnd1` ↔ Turso `aws-ap-northeast-1` (도쿄 동지역)
+- 공개 읽기 API: CDN 5분 재사용 + 24시간 stale-while-revalidate
 
 private SQLite와 원문 payload는 Vercel·Turso·GitHub에 올리지 않는다. 배포 전용
 projection은 `npm run data:build-public`으로 만들며, 원본의 회계 합계와 행 수가

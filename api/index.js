@@ -15,6 +15,14 @@ const db = createClient({
 app.use(cors({ origin: /^http:\/\/(127\.0\.0\.1|localhost):\d+$/ }));
 app.use(compression({ threshold: 1024 }));
 app.use(express.json({ limit: '32kb' }));
+app.use((req, res, next) => {
+    if (req.method === 'GET' && req.path.startsWith('/api/')) {
+        // Dataset releases are immutable between controlled promotions. Keep browser
+        // revalidation while allowing Vercel's CDN to absorb repeated public reads.
+        res.set('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400, stale-if-error=86400');
+    }
+    next();
+});
 let availableYears = [];
 let defaultYear;
 let latestCompleteYear;
@@ -1179,7 +1187,7 @@ app.get('/api/rankings/:mode', async (req, res) => {
 app.get('/api/map', async (req, res) => {
     const year = parseYear(req.query.year);
     const limit = parseLimit(req.query.limit, 50000, 75000);
-    res.set('Cache-Control', 'private, max-age=300, stale-while-revalidate=86400');
+    res.set('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400, stale-if-error=86400');
     const rows = await statement(`
     ${snapshotCte(year)}
     SELECT a.id, p.id AS officialId, p.canonical_name AS name,

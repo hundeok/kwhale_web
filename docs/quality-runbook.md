@@ -159,6 +159,15 @@ npm run release:data
 비공개 필드 검사 → Vercel 환경변수 교체 → 프로덕션 배포를 순서대로 수행한다.
 기존 Turso DB는 즉시 삭제하지 않아 롤백 대상으로 보존한다.
 
+### 배포 성능 기준
+
+- Vercel Function과 Turso는 모두 도쿄 리전에 둔다.
+- 공개 GET API는 브라우저에 영구 저장하지 않고 CDN에서 5분 재사용한다.
+- 데이터 승격 직후 첫 요청은 원격 SQL 계산 때문에 캐시 적중 요청보다 느릴 수
+  있다.
+- `/api/dashboard`, `/api/officials`, `/api/alpha-engine`은 배포 후 각각 두 번
+  호출해 첫 응답과 `x-vercel-cache: HIT` 응답을 모두 확인한다.
+
 ## 8. 장애 대응
 
 ### `undefined.toLocaleString`
